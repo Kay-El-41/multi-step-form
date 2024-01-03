@@ -1,7 +1,23 @@
-.step-button {
-  @apply cursor-pointer flex flex-col md:flex-row disabled:bg-primary/60 disabled:shadow-xl disabled:text-white  hover:bg-primary/20 active:bg-primary/60 active:shadow-lg active:text-white py-2 md:py-1 w-28 pl-1 md:rounded-tl-xl items-center gap-2;
+.step-div {
+  @apply flex relative flex-col md:flex-row py-3 md:py-1 w-28 pl-1 md:rounded-tl-xl items-center gap-2;
 }
 
-.step-number-button {
-  @apply w-7 py-1 font-batman bg-primary text-white rounded-tl-xl rounded-br-xl;
+.step-div-active {
+  @apply w-full h-1 bg-primary absolute bottom-0 md:-bottom-2;
+}
+
+.step-number {
+  @apply w-7 py-1 text-center font-batman bg-primary text-white rounded-tl-xl rounded-br-xl;
+}
+
+.step-one-input {
+  @apply focus:shadow focus:border-primary appearance-none placeholder:opacity-50 border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
+}
+
+.step-form-label {
+  @apply block font-batman text-sm  mb-2;
+}
+
+.step-form-button {
+  @apply bg-primary md:mt-8 w-32 py-2 text-white font-batman;
 }

@@ -1,30 +1,67 @@
-# React + TypeScript + Vite
+# Multi-Step-Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The multi-step-form is created using controlled flows components and custom hook React design patterns.
 
-Currently, two official plugins are available:
+![Multi-Step-Form](/public/form.png?raw=true "Title")
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Created using vite+React+TypeScript. Use 'npm run dev' to start the local development server.
 
-## Expanding the ESLint configuration
+The controlled flow design pattern results in the simple and efficient clean code with only one parent controlling all the steps.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The custom hook design pattern enables the developer to work separately on the logic and the user interface.
 
-- Configure the top-level `parserOptions` property like this:
+The example of React custom hook design:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```JSX
+export const useHook = () => {
+  const [data, setData] = useState();
+
+  const handleChangeData = (newData) => {
+    setData(newData);
+  };
+
+  return { data, handleChangeData };
+};
+
+export const App = () => {
+  // Accessing the data from custom hook
+  const { data, handleChangeData } = useHook();
+  // ... codes
+};
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+The example of React controlled flow design pattern:
+
+```JSX
+export const ControlledSteps = ({ children, setCurrentStep }) => {
+  const currentStepComponent = React.Children.toArray(children)[currentStep];
+
+  const goNextStep = () => {
+    setCurrentStep((prev) => prev + 1);
+  };
+
+  // Check if the current component is a element, and return it with the other props we want to pass to the child
+  if (React.isValidElement(currentStepComponent)) {
+    return React.cloneElement(currentStepComponent, goNextStep);
+  }
+
+  return currentStepComponent;
+};
+```
+
+Usage of the controlled flow:
+
+```JSX
+export const App = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+
+  //Based on the current step of 0, only the step1 component is shown in the browser.
+
+  return (
+    <ControlledSteps setCurrentStep={setCurrentStep}>
+      <Step1Component />
+      <Step2Component />
+    </ControlledSteps>
+  );
+};
+```
