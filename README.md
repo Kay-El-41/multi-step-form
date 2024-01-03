@@ -1,6 +1,6 @@
 # Multi-Step-Form
 
-The multi-step-form is created using controlled flows components and custom hook React design patterns.
+The multi-step-form is created using controlled flows components and custom hook React design patterns as a practice mini-project.
 
 ![Multi-Step-Form](/public/form.png?raw=true "Title")
 
